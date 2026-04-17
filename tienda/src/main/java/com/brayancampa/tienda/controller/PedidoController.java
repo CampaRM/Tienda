@@ -1,7 +1,9 @@
 package com.brayancampa.tienda.controller;
 
 import com.brayancampa.tienda.Service.PedidoService;
+import com.brayancampa.tienda.Service.UsuarioService;
 import com.brayancampa.tienda.entity.Pedido;
+import com.brayancampa.tienda.entity.Usuario;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,9 +15,11 @@ import org.springframework.web.bind.annotation.*;
 public class PedidoController {
 
     private final PedidoService pedidoService;
+    private final UsuarioService usuarioService;
 
-    public PedidoController(PedidoService pedidoService) {
+    public PedidoController(PedidoService pedidoService, UsuarioService usuarioService) {
         this.pedidoService = pedidoService;
+        this.usuarioService = usuarioService;
     }
 
     // Listar pedidos
@@ -30,6 +34,7 @@ public class PedidoController {
     public String mostrarFormulario(Model model){
         model.addAttribute("pedido", new Pedido());
         model.addAttribute("modoEdicion", false);
+        model.addAttribute("usuarios", usuarioService.listar());
         return "pedido-formulario";
     }
 
@@ -64,6 +69,7 @@ public class PedidoController {
                              Model model) {
 
         if (result.hasErrors()) {
+            model.addAttribute("usuarios", usuarioService.listar());
             model.addAttribute("modoEdicion", true);
             return "pedido-formulario";
         }

@@ -1,6 +1,7 @@
 package com.brayancampa.tienda.Config;
 
 import com.brayancampa.tienda.controller.RegisterController;
+import com.brayancampa.tienda.entity.Usuario;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,16 +12,14 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Configuration
 public class SecurityConfig {
 
-    // Creamos un objeto para encriptar la contraseña
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return NoOpPasswordEncoder.getInstance();
-        // contraseña encriptada -> return new BCryptPasswordEncoder();
-    }
+    private static List<Usuario> usuariosRegistrados = new ArrayList<>();
 
     // Creamos un objeto para el usuario de la aplicación
     @Bean
@@ -29,18 +28,20 @@ public class SecurityConfig {
             //Verificamos el admin manual
             if ("admin".equals(username)) {
                 return User.withUsername("admin")
-                        .password("1234")
+                        .password("{noop}")
                         .roles("ADMIN")
                         .build();
             }
-            //Usamos el buscador que creamos en el controlador
-            String passwordEncontrada = RegisterController.buscarPassword(username);
-            if (passwordEncontrada != null) {
-                return User.withUsername(username)
-                        .password(passwordEncontrada)
-                        .roles("USER")
-                        .build();
+            // 2. Buscamos en tu lista de Usuarios registrados
+            for (Usuario u : usuariosRegistrados) {
+                if (u.getNombreUsuario().equalsIgnoreCase(username)) {
+                    return User.withUsername(u.getNombreUsuario())
+                            .password("{noop}") // forma de spring security para no tener que ingresar una contraseña.
+                            .roles("USER")
+                            .build();
+                }
             }
+
             //Si no existe en ningún lado
             throw new UsernameNotFoundException("Usuario no encontrado");
         };

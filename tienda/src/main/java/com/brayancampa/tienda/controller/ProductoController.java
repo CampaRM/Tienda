@@ -1,6 +1,8 @@
 package com.brayancampa.tienda.controller;
 
+import com.brayancampa.tienda.Service.CategoriaService;
 import com.brayancampa.tienda.Service.ProductoService;
+import com.brayancampa.tienda.entity.Categoria;
 import com.brayancampa.tienda.entity.Producto;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -13,9 +15,11 @@ import org.springframework.web.bind.annotation.*;
 public class ProductoController {
 
     private final ProductoService productoService;
+    private final CategoriaService categoriaService;
 
-    public ProductoController(ProductoService productoService) {
+    public ProductoController(ProductoService productoService, CategoriaService categoriaService) {
         this.productoService = productoService;
+        this.categoriaService = categoriaService;
     }
 
     @GetMapping
@@ -27,6 +31,7 @@ public class ProductoController {
     @GetMapping("/nuevo")
     public String mostrarFormulario(Model model){
         model.addAttribute("producto", new Producto());
+        model.addAttribute("listaCategorias", categoriaService.listar());
         model.addAttribute("modoEdicion", false);
         return "producto-formulario";
     }

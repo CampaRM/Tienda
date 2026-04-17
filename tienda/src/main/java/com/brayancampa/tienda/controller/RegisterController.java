@@ -1,45 +1,51 @@
 package com.brayancampa.tienda.controller;
 
+import com.brayancampa.tienda.entity.Usuario;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Controller
+@Controller("/register")
 public class RegisterController {
 
-    private static List<String> usuariosRegistrados = new ArrayList<>();
+    private static List<Usuario> usuariosRegistrados = new ArrayList<>();
 
     //Método para buscar si un usuario existe en la lista
-    public static String buscarPassword(String username) {
-        for (String dato : usuariosRegistrados) {
-            String nombre = dato.substring(0, dato.indexOf(" (")).trim();
-            String contra = dato.substring(dato.indexOf("(") + 1, dato.indexOf(")")).trim();
+    public static boolean buscarUser(String username) {
+        for (Usuario u : usuariosRegistrados) {
 
-            if (nombre.equalsIgnoreCase(username)) {
-                return contra;
+            if (u.getNombreUsuario().equalsIgnoreCase(username)) {
+                return true;
             }
         }
-        return null;
+        return false;
     }
 
 
     @GetMapping("/register")
-    public String mostrarFormulario() {
+    public String mostrarFormulario(Model model) {
+        model.addAttribute("usuario", new Usuario());
         return "register";
     }
 
     @PostMapping("/enviar-registro")
-    public String registrar(@RequestParam String nombre, @RequestParam String contra) {
-        usuariosRegistrados.add(nombre + " (" + contra + ")");
+    public String registrar(@ModelAttribute("usuario") Usuario usuario, Model model) {
 
-        System.out.println("Nuevo usuario registrado: " + nombre + " - " + contra);
-        System.out.println("Total registrados: " + usuariosRegistrados.size());
+        if (buscarUser(usuario.getNombreUsuario())) {
+            model.addAttribute("error", "El nombre de usuario '" + usuario.getNombreUsuario() + "' ya está en uso.");
+
+            model.addAttribute("usuario", usuario);
+
+            return "/register";
+        }
+        usuariosRegistrados.add(usuario);
 
         return "redirect:/login";
     }
-
 }
