@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiendita Guajitos</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+    <nav>
+        <div class="logo">Tiendita<span>-Guajitos</span></div>
+        <ul class="nav-links">
+            <li><a class="btn-cta" th:href="@{/pedido}">Pedido</a></li>
+            <li><a class="btn-cta" th:href="@{/producto}">Producto</a></li>
+            <li><a class="btn-cta" th:href="@{/usuario}">Usuario</a></li>
+        </ul>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content">
+            <h1>Ubicados en <span>Guajitos.</span></h1>
+            <p>Tienda dedicada al comercio con presencia digital para facilitarte tus compras y pedidos.</p>
+            <div class="hero-buttons">
+                <a th:href="@{/categoria}" class="btn-primary">Explorar Categoria</a>
+                <form th:action="@{/logout}" method="post" style="display: inline;">
+                <button type="submit" class="btn-secondary" style="cursor: pointer; border: none; font-family: inherit;">
+                    Cerrar sesión
+                </button>
+            </form>
+            </div>
+        </div>
+    </header>
+
+    <section class="features">
+        <div class="card">
+            <span class="card-icon">01</span>
+            <h3>Redes Sociales</h3>
+            <p>Estas son las redes sociales de nuestra tienda:</p>
+        </div>
+        <div class="card">
+            <span class="card-icon">02</span>
+            <h3>Ubicación:</h3>
+            <p>Puedes ubicarnos en guajitos de la zona 21 de la Cdad, de Guatemala</p>
+        </div>
+        <div class="card">
+            <span class="card-icon">03</span>
+            <h3>Licencias</h3>
+            <p>Contamos con las siguientes certificaciones para poder brindarte un excelente servicio y asegurarte un
+                soporte de calidad de los productos: NIT , RTU, FEL, ISO 9001 y Certificado SSL.</p>
+        </div>
+    </section>
+
+</body>
+
+</html>

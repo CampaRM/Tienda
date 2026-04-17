@@ -1,10 +1,68 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
-    <title>Usuario</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usuarios - Gestión</title>
+    <link rel="stylesheet" th:href="@{/css/general.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
+
 <body>
+    <div class="header-container">
+        <h1 class="titulo">LISTA DE USUARIOS</h1>
+    </div>
+
+    <div class="crud-actions">
+        <a th:href="@{/usuario/nuevo}" class="btn btn-nuevo">NUEVO USUARIO</a>
+        <a th:href="@{/home}" class="btn btn-nuevo">IR HOME</a>
+    </div>
+
+    <div class="crud-actions-secondary">
+        <small class="texto-auxiliar">Otras acciones:</small>
+        <div class="botones-container">
+            <a th:href="@{/producto}" class="btn-sm">Ir a pedido</a>
+            <a th:href="@{/pedido}" class="btn-sm">ir a producto</a>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>NOMBRE</th>
+                <th>APELLIDO</th>
+                <th>EDAD</th>
+                <th style="text-align: center;">ACCIONES</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="usuario : ${usuarios}">
+                <td th:text="${usuario.idUsuario}"></td>
+                <td th:text="${usuario.nombreUsuario}"></td>
+                <td th:text="${usuario.apellidoUsuario}"></td>
+                <td th:text="${usuario.edadUsuario}"></td>
+                <td style="text-align: center;">
+                    <a th:href="@{/usuario/editar/{id}(id=${usuario.idUsuario})}" 
+                       class="btn-icon" title="Editar Usuario">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </a>
+
+                    <a th:href="@{/usuario/eliminar/{id}(id=${usuario.idUsuario})}" 
+                       class="btn-icon danger" 
+                       title="Eliminar Usuario"
+                       onclick="return confirm('¿Estás seguro?')">
+                        <i class="fa-solid fa-trash"></i>
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div th:if="${#lists.isEmpty(usuarios)}" class="mensaje-vacio">
+        No hay usuarios registrados en la base de datos.
+    </div>
 
 </body>
 </html>

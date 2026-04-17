@@ -1,10 +1,68 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
-    <title>Pedido</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedidos - Gestión</title>
+    <link rel="stylesheet" th:href="@{/css/general.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
+
 <body>
+    <div class="header-container">
+        <h1 class="titulo">LISTA DE PEDIDOS</h1>
+    </div>
+
+    <div class="crud-actions">
+        <a th:href="@{/pedido/nuevo}" class="btn btn-nuevo">NUEVO PEDIDO</a>
+        <a th:href="@{/home}" class="btn btn-nuevo">IR HOME</a>
+    </div>
+
+    <div class="crud-actions-secondary">
+        <small class="texto-auxiliar">Ver otras tablas:</small>
+        <div class="botones-container">
+            <a th:href="@{/producto}" class="btn-sm">IR A PRODUCTOS</a>
+            <a th:href="@{/usuario}" class="btn-sm">IR A USUARIOS</a>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>FECHA</th>
+                <th>TOTAL</th>
+                <th>USUARIO</th>
+                <th style="text-align: center;">ACCIONES</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="pedido : ${pedidos}">
+                <td th:text="${pedido.idPedido}"></td>
+                <td th:text="${pedido.fechaPedido}"></td>
+                <td th:text="${pedido.totalPedido}"></td>
+                <td th:text="${pedido.usuario.nombreUsuario}"></td>
+                <td style="text-align: center;">
+                    <a th:href="@{/pedido/editar/{id}(id=${pedido.idPedido})}" 
+                       class="btn-icon" title="Editar Pedido">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </a>
+
+                    <a th:href="@{/pedido/eliminar/{id}(id=${pedido.idPedido})}" 
+                       class="btn-icon danger" 
+                       title="Eliminar Pedido"
+                       onclick="return confirm('¿Estás seguro de eliminar este pedido?')">
+                        <i class="fa-solid fa-trash"></i>
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div th:if="${#lists.isEmpty(pedidos)}" class="mensaje-vacio">
+        No hay pedidos registrados en la base de datos.
+    </div>
 
 </body>
 </html>

@@ -1,4 +1,4 @@
-package com.brayancampa.tienda.Controller;
+package com.brayancampa.tienda.controller;
 
 import com.brayancampa.tienda.Service.CategoriaService;
 import com.brayancampa.tienda.entity.Categoria;

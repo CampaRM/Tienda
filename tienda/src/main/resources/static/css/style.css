@@ -1,0 +1,234 @@
+:root {
+    --primary: #0B3B59;
+    --bg-dark: #082126;
+    --accent: #1C5359;
+    --text-light: #AEBEBF;
+    --gold: #A68A56;
+    --white: #ffffff;
+    --glass: rgba(11, 59, 89, 0.15);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-dark);
+    background: radial-gradient(circle at 0% 0%, #0b3b59 0%, #082126 50%);
+    color: var(--text-light);
+    font-family: 'Inter', system-ui, sans-serif;
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 15%;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    backdrop-filter: blur(12px);
+    background: rgba(8, 33, 38, 0.7);
+    border-bottom: 1px solid rgba(174, 189, 191, 0.1);
+}
+
+.logo {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--white);
+    letter-spacing: -0.5px;
+    text-transform: uppercase;
+}
+
+.logo span {
+    color: var(--gold);
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 3.5rem;
+    align-items: center;
+    margin-right: 2rem;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-light);
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    transition: 0.3s;
+    padding: 10px 5px;
+}
+
+.nav-links a:hover {
+    color: var(--gold);
+}
+
+.btn-cta {
+    background: var(--accent) !important;
+    padding: 12px 28px !important;
+    border-radius: 4px;
+    color: var(--white) !important;
+    margin-left: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.btn-cta:hover {
+    background: var(--gold) !important;
+    color: var(--bg-dark) !important;
+    transform: translateY(-2px);
+}
+
+.hero {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 0 10%;
+    position: relative;
+}
+
+.hero-content {
+    max-width: 900px;
+    z-index: 2;
+}
+
+.hero h1 {
+    font-size: clamp(3.5rem, 12vw, 7rem);
+    line-height: 0.85;
+    color: var(--white);
+    margin-bottom: 2rem;
+    font-weight: 900;
+}
+
+.hero h1 span {
+    color: transparent;
+    -webkit-text-stroke: 1.5px var(--gold);
+    display: block;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    margin-bottom: 3rem;
+    color: var(--text-light);
+    max-width: 550px;
+    opacity: 0.9;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.btn-primary, .btn-secondary {
+    padding: 1.2rem 2.5rem;
+    text-decoration: none;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.75rem;
+    transition: all 0.4s ease;
+    display: inline-block;
+    cursor: pointer;
+    font-family: inherit;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.btn-primary {
+    background: var(--gold);
+    color: var(--bg-dark);
+    border: none;
+}
+
+.btn-primary:hover {
+    background: var(--white);
+    transform: translateY(-5px);
+}
+
+.btn-secondary {
+    background: transparent !important;
+    border: 1px solid var(--accent) !important;
+    color: var(--white) !important;
+}
+
+.btn-secondary:hover {
+    background: var(--accent) !important;
+    color: var(--white) !important;
+}
+
+.features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2.5rem;
+    padding: 8rem 10%;
+    background: var(--bg-dark);
+}
+
+.card {
+    background: var(--glass);
+    padding: 4rem 3rem;
+    border: 1px solid rgba(174, 189, 191, 0.05);
+    position: relative;
+    transition: 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background: var(--gold);
+    transition: 0.4s;
+}
+
+.card:hover {
+    background: rgba(11, 59, 89, 0.25);
+    transform: translateY(-15px);
+}
+
+.card:hover::after {
+    width: 100%;
+}
+
+.card-icon {
+    font-size: 3.5rem;
+    font-weight: 900;
+    color: rgba(166, 138, 86, 0.15);
+    margin-bottom: 1.5rem;
+    display: block;
+}
+
+.card h3 {
+    color: var(--white);
+    margin-bottom: 1rem;
+    font-size: 1.6rem;
+    letter-spacing: -0.5px;
+}
+
+.card p {
+    font-size: 1rem;
+    color: var(--text-light);
+}
+
+@media (max-width: 992px) {
+    .nav-links { gap: 1.5rem; }
+}
+
+@media (max-width: 768px) {
+    .nav-links { display: none; }
+    .hero { text-align: center; justify-content: center; }
+    .hero-buttons { flex-direction: column; }
+    .hero h1 { font-size: 4rem; }
+    .features { padding: 4rem 5%; }
+}

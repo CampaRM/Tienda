@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${pedido.idPedido != null} ? 'Editar Pedido' : 'Nuevo Pedido'"></title>
+    <link rel="stylesheet" th:href="@{/css/formulario.css}">
+</head>
+<body>
+    <div class="container">
+        <h1 th:text="${pedido.idPedido != null} ? 'Editar Pedido' : 'Nuevo Pedido'"></h1>
+
+        <form th:action="${pedido.idPedido != null} ? @{/pedido/actualizar} : @{/pedido/guardar}" 
+              th:object="${pedido}" 
+              method="post">
+
+            <input type="hidden" th:field="*{idPedido}">
+
+            <div class="campo">
+                <label>Fecha</label>
+                <input type="date" th:field="*{fechaPedido}">
+                <div class="error" th:if="${#fields.hasErrors('fechaPedido')}" th:errors="*{fechaPedido}"></div>
+            </div>
+
+            <div class="campo">
+                <label>Total</label>
+                <input type="number" step="0.01" th:field="*{totalPedido}">
+                <div class="error" th:if="${#fields.hasErrors('totalPedido')}" th:errors="*{totalPedido}"></div>
+            </div>
+
+            <div class="campo">
+                <label>Usuario</label>
+                <select th:field="*{usuario}">
+                    <option th:each="u : ${usuarios}" 
+                            th:value="${u.idUsuario}" 
+                            th:text="${u.nombreUsuario}"></option>
+                </select>
+                <div class="error" th:if="${#fields.hasErrors('usuario')}" th:errors="*{usuario}"></div>
+            </div>
+
+            <div class="acciones">
+                <button type="submit" class="btn btn-guardar" 
+                        th:text="${pedido.idPedido != null} ? 'Actualizar' : 'Guardar'"></button>
+                <a th:href="@{/pedido}" class="btn-cancelar">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

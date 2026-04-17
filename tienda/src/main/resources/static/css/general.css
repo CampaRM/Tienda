@@ -1,0 +1,165 @@
+:root {
+    --primary: #0B3B59;
+    --bg-dark: #082126;
+    --accent: #1C5359;
+    --text-light: #AEBEBF;
+    --gold: #A68A56;
+    --white: #ffffff;
+    --glass: rgba(11, 59, 89, 0.15);
+}
+
+body {
+    background-color: var(--bg-dark);
+    background: radial-gradient(circle at top right, #0b3b59 0%, #082126 60%);
+    color: var(--text-light);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    margin: 0;
+    padding: 60px 10%;
+    min-height: 100vh;
+}
+
+.titulo {
+    font-size: 2.5rem;
+    color: var(--white);
+    font-weight: 900;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+    letter-spacing: -1px;
+    border-left: 5px solid var(--gold);
+    padding-left: 20px;
+}
+
+.btn-nuevo {
+    display: inline-block;
+    background-color: var(--gold);
+    color: var(--bg-dark);
+    text-decoration: none;
+    padding: 14px 30px;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    margin-bottom: 3rem;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.btn-nuevo:hover {
+    background-color: var(--white);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--glass);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(174, 189, 191, 0.1);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+
+thead {
+    background-color: rgba(11, 59, 89, 0.6);
+}
+
+th {
+    text-align: left;
+    padding: 20px;
+    color: var(--gold);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-bottom: 2px solid var(--accent);
+}
+
+td {
+    padding: 18px 20px;
+    border-bottom: 1px solid rgba(174, 189, 191, 0.05);
+    font-size: 0.95rem;
+}
+
+tbody tr {
+    transition: all 0.3s ease;
+}
+
+tbody tr:hover {
+    background-color: rgba(28, 83, 89, 0.25);
+    color: var(--white);
+    transform: scale(1.005);
+}
+
+tbody tr td:first-child {
+    font-weight: 800;
+    color: var(--gold);
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 30px 5%;
+    }
+
+    .titulo {
+        font-size: 1.8rem;
+    }
+
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+}
+
+.crud-actions-secondary {
+    margin-bottom: 2rem;
+    margin-top: -2rem;
+}
+
+.texto-auxiliar {
+    font-size: 0.7rem;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: block;
+    margin-bottom: 10px;
+    opacity: 0.7;
+}
+
+.botones-container {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-sm {
+    padding: 8px 16px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--text-light);
+    text-decoration: none;
+    border: 1px solid rgba(166, 138, 86, 0.3);
+    background: transparent;
+    transition: 0.3s;
+}
+
+.btn-sm:hover {
+    border-color: var(--gold);
+    color: var(--white);
+    background: rgba(166, 138, 86, 0.1);
+}
+
+.btn-icon {
+    color: var(--text-light);
+    font-size: 1.1rem;
+    margin: 0 10px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.btn-icon:hover {
+    color: var(--gold);
+    transform: scale(1.2);
+}
+
+.btn-icon.danger:hover {
+    color: #ff5e5e;
+}

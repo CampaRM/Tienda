@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro | Tiendita Guajitos</title>
+    <link rel="stylesheet" th:href="@{/css/auth.css}">
+</head>
+
+<body>
+
+    <div class="auth-container">
+        <div class="auth-header">
+            <h2>Tiendita<span>-Registro</span></h2>
+            <p>Crea tu nueva cuenta</p>
+        </div>
+
+        <form th:action="@{/register}" th:object="${usuario}" method="post">
+            
+            <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input type="text" id="nombre" th:field="*{nombreUsuario}" placeholder="Tu nombre" required>
+                <div class="error-msg" th:if="${#fields.hasErrors('nombreUsuario')}" th:errors="*{nombreUsuario}"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="apellido">Apellido</label>
+                <input type="text" id="apellido" th:field="*{apellidoUsuario}" placeholder="Tu apellido" required>
+            </div>
+
+            <div class="form-group">
+                <label for="username">Usuario</label>
+                <input type="text" id="username" th:field="*{username}" placeholder="Nombre de usuario" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Contraseña</label>
+                <input type="password" id="password" th:field="*{password}" placeholder="********" required>
+            </div>
+
+            <button type="submit" class="btn-auth">Crear Cuenta</button>
+
+            <div class="auth-footer">
+                <p>¿Ya tienes una cuenta? <a th:href="@{/login}">Inicia sesión aquí</a></p>
+            </div>
+            
+        </form>
+    </div>
+
+</body>
+</html>

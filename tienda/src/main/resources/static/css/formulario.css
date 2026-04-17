@@ -1,0 +1,138 @@
+:root {
+    --primary: #0B3B59;
+    --bg-dark: #082126;
+    --accent: #1C5359;
+    --text-light: #AEBEBF;
+    --gold: #A68A56;
+    --white: #ffffff;
+    --error: #ff4d4d;
+    --glass: rgba(11, 59, 89, 0.15);
+}
+
+body {
+    background-color: var(--bg-dark);
+    background: radial-gradient(circle at bottom left, #0b3b59 0%, #082126 70%);
+    color: var(--text-light);
+    font-family: 'Inter', system-ui, sans-serif;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    background: var(--glass);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(174, 189, 191, 0.1);
+    padding: 3rem;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+}
+
+h1 {
+    color: var(--white);
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-align: center;
+    border-bottom: 2px solid var(--gold);
+    padding-bottom: 10px;
+}
+
+.campo {
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    color: var(--gold);
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+}
+
+input[type="text"], 
+input[type="number"], 
+input[type="email"], 
+input[type="password"],
+textarea, 
+select {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(174, 189, 191, 0.2);
+    padding: 12px 15px;
+    color: var(--white);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+input:focus {
+    border-color: var(--gold);
+    background: rgba(11, 59, 89, 0.4);
+    box-shadow: 0 0 8px rgba(166, 138, 86, 0.3);
+}
+
+.error {
+    color: var(--error);
+    font-size: 0.75rem;
+    margin-top: 5px;
+    font-weight: 500;
+}
+
+.acciones {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 2.5rem;
+}
+
+.btn-guardar {
+    background: var(--gold);
+    color: var(--bg-dark);
+    border: none;
+    padding: 12px 30px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-guardar:hover {
+    background: var(--white);
+    transform: translateY(-3px);
+}
+
+.acciones a {
+    color: var(--text-light);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: 0.3s;
+    border-bottom: 1px solid transparent;
+}
+
+.acciones a:hover {
+    color: var(--white);
+    border-bottom: 1px solid var(--gold);
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 2rem;
+    }
+    .acciones {
+        flex-direction: column;
+        gap: 20px;
+    }
+    .btn-guardar {
+        width: 100%;
+    }
+}
