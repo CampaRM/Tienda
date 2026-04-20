@@ -1,6 +1,7 @@
 package com.brayancampa.tienda.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
@@ -20,6 +21,7 @@ public class Usuario {
     @Column(name = "apellido_usuario", nullable = false)
     private String apellidoUsuario;
 
+    @Min(value = 0, message = "La edad no puede ser negativo")
     @NotNull
     @Column(name = "edad_usuario", nullable = false)
     private Integer edadUsuario;

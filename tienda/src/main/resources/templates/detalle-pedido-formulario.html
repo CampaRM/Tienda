@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${modoEdicion} ? 'Editar Detalle' : 'Nuevo Detalle'"></title>
+    <link rel="stylesheet" th:href="@{/css/formulario.css}">
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="titulo-formulario" th:text="${modoEdicion} ? 'EDITAR DETALLE' : 'NUEVO DETALLE'"></h1>
+
+        <form th:action="${modoEdicion} ? @{/detalle-pedido/actualizar/{id}(id=${detalle.idDetalle})} : @{/detalle-pedido/guardar}" 
+              th:object="${detalle}"
+              method="post">
+
+            <input type="hidden" th:field="*{idDetalle}">
+
+            <div class="campo">
+                <label for="pedido">ID DE PEDIDO</label>
+                <select id="pedido" th:field="*{pedido}">
+                    <option value="" disabled selected>Seleccione el pedido</option>
+                    <option th:each="p : ${pedidos}" 
+                            th:value="${p.idPedido}" 
+                            th:text="'Pedido #' + ${p.idPedido} + ' - ' + ${p.fechaPedido}">
+                    </option>
+                </select>
+                <div class="error" th:if="${#fields.hasErrors('pedido')}" th:errors="*{pedido}"></div>
+            </div>
+
+            <div class="campo">
+                <label for="producto">PRODUCTO</label>
+                <select id="producto" th:field="*{producto}">
+                    <option value="" disabled selected>Seleccione un producto</option>
+                    <option th:each="prod : ${productos}" 
+                            th:value="${prod.idProducto}" 
+                            th:text="${prod.nombreProducto} + ' (Stock: ' + ${prod.stock} + ')'">
+                    </option>
+                </select>
+                <div class="error" th:if="${#fields.hasErrors('producto')}" th:errors="*{producto}"></div>
+            </div>
+
+            <div class="campo">
+                <label for="cantidad">CANTIDAD</label>
+                <input type="number" id="cantidad" min="1" th:field="*{cantidad}" placeholder="0">
+                <div class="error" th:if="${#fields.hasErrors('cantidad')}" th:errors="*{cantidad}"></div>
+            </div>
+
+            <div class="campo">
+                <label for="precioUnitario">PRECIO UNITARIO</label>
+                <input type="number" id="precioUnitario" step="0.01" min="0" th:field="*{precioUnitario}" placeholder="0.00">
+                <div class="error" th:if="${#fields.hasErrors('precioUnitario')}" th:errors="*{precioUnitario}"></div>
+            </div>
+
+            <div class="acciones">
+                <button type="submit" class="btn-guardar" th:text="${modoEdicion} ? 'ACTUALIZAR' : 'GUARDAR'"></button>
+                <a th:href="@{/detalle-pedido}" class="btn-cancelar">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>

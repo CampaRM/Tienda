@@ -1,52 +1,51 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-
 <head>
     <meta charset="UTF-8">
     <title th:text="${usuario.idUsuario != null} ? 'Editar Usuario' : 'Nuevo Usuario'"></title>
     <link rel="stylesheet" th:href="@{/css/formulario.css}">
 </head>
-
 <body>
     <div class="container">
         <h1 th:text="${usuario.idUsuario != null} ? 'Editar Usuario' : 'Nuevo Usuario'"></h1>
 
-        <form th:action="${usuario.idUsuario != null} ? @{/usuario/actualizar} : @{/usuario/guardar}"
-            th:object="${usuario}" method="post">
+        <form th:action="${usuario.idUsuario != null} ? @{/usuario/actualizar} : @{/usuario/guardar}" 
+              th:object="${usuario}" 
+              method="post">
 
             <input type="hidden" th:field="*{idUsuario}">
 
             <div class="campo">
-                <label>Nombre</label>
-                <input type="text" th:field="*{nombreUsuario}">
+                <label for="nombreUsuario">Nombre</label>
+                <input type="text" id="nombreUsuario" th:field="*{nombreUsuario}">
                 <div class="error" th:if="${#fields.hasErrors('nombreUsuario')}" th:errors="*{nombreUsuario}"></div>
             </div>
 
             <div class="campo">
-                <label>Apellido</label>
-                <input type="text" th:field="*{apellidoUsuario}">
+                <label for="apellidoUsuario">Apellido</label>
+                <input type="text" id="apellidoUsuario" th:field="*{apellidoUsuario}">
                 <div class="error" th:if="${#fields.hasErrors('apellidoUsuario')}" th:errors="*{apellidoUsuario}"></div>
             </div>
 
             <div class="campo">
-                <label>Edad</label>
-                <input type="number" th:field="*{edadUsuario}">
+                <label for="edadUsuario">Edad</label>
+                <input type="number" id="edadUsuario" min="0" th:field="*{edadUsuario}">
                 <div class="error" th:if="${#fields.hasErrors('edadUsuario')}" th:errors="*{edadUsuario}"></div>
             </div>
 
-            <div class="campo" th:if="${usuario.idUsuario == null}">
-                <label>Contraseña</label>
-                <input type="password" th:field="*{contrasena}" placeholder="Ingresa la contraseña">
+            <div class="campo">
+                <label for="contrasena">Contraseña</label>
+                <input type="password" id="contrasena" th:field="*{contrasena}" 
+                       th:placeholder="${usuario.idUsuario != null} ? 'Dejar en blanco para no cambiar' : 'Ingrese contraseña'">
                 <div class="error" th:if="${#fields.hasErrors('contrasena')}" th:errors="*{contrasena}"></div>
             </div>
 
             <div class="acciones">
-                <button type="submit" class="btn-guardar"
-                    th:text="${usuario.idUsuario != null} ? 'Actualizar' : 'Guardar'"></button>
+                <button type="submit" class="btn btn-guardar" 
+                        th:text="${usuario.idUsuario != null} ? 'Actualizar' : 'Guardar'"></button>
                 <a th:href="@{/usuario}" class="btn-cancelar">Cancelar</a>
             </div>
         </form>
     </div>
 </body>
-
 </html>
