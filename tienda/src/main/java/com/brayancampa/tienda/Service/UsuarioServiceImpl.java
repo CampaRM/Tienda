@@ -2,6 +2,7 @@ package com.brayancampa.tienda.Service;
 
 import com.brayancampa.tienda.entity.Usuario;
 import com.brayancampa.tienda.repository.UsuarioRepository;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -40,4 +41,11 @@ public class UsuarioServiceImpl implements UsuarioService{
     public void eliminar(Integer id) {
         usuarioRepository.deleteById(id);
     }
+
+    @Override
+    public Usuario buscarPorNombre(String nombreUsuario) {
+        return usuarioRepository.findByNombreUsuario(nombreUsuario).orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
+    }
+
+
 }

@@ -18,6 +18,9 @@ public class Categoria {
     @Column(name = "descripcion_categoria")
     private String descripcionCategoria;
 
+    public Categoria() {
+    }
+
     public Integer getIdCategoria() {
         return idCategoria;
     }

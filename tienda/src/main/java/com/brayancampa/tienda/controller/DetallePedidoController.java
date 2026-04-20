@@ -1,6 +1,8 @@
 package com.brayancampa.tienda.controller;
 
 import com.brayancampa.tienda.Service.DetallePedidoService;
+import com.brayancampa.tienda.Service.PedidoService;
+import com.brayancampa.tienda.Service.ProductoService;
 import com.brayancampa.tienda.entity.DetallePedido;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -13,9 +15,13 @@ import org.springframework.web.bind.annotation.*;
 public class DetallePedidoController {
 
     private final DetallePedidoService detallePedidoService;
+    private final ProductoService productoService;
+    private final PedidoService pedidoService;
 
-    public DetallePedidoController(DetallePedidoService detallePedidoService) {
+    public DetallePedidoController(DetallePedidoService detallePedidoService,ProductoService productoService, PedidoService pedidoService) {
         this.detallePedidoService = detallePedidoService;
+        this.productoService = productoService;
+        this.pedidoService = pedidoService;
     }
 
     @GetMapping
@@ -27,6 +33,8 @@ public class DetallePedidoController {
     @GetMapping("/nuevo")
     public String mostrarFormulario(Model model){
         model.addAttribute("detalle", new DetallePedido());
+        model.addAttribute("productos", productoService.listar());
+        model.addAttribute("pedidos", pedidoService.listar());
         model.addAttribute("modoEdicion", false);
         return "detalle-pedido-formulario";
     }
@@ -35,12 +43,12 @@ public class DetallePedidoController {
     public String crear(@Valid @ModelAttribute("detalle") DetallePedido detalle,
                         BindingResult result,
                         Model model) {
-
         if (result.hasErrors()) {
+            model.addAttribute("productos", productoService.listar());
+            model.addAttribute("pedidos", pedidoService.listar());
             model.addAttribute("modoEdicion", false);
             return "detalle-pedido-formulario";
         }
-
         detallePedidoService.crear(detalle);
         return "redirect:/detalle-pedido";
     }
@@ -48,6 +56,8 @@ public class DetallePedidoController {
     @GetMapping("/editar/{id}")
     public String editar(@PathVariable Integer id, Model model) {
         model.addAttribute("detalle", detallePedidoService.obtenerPorId(id));
+        model.addAttribute("productos", productoService.listar());
+        model.addAttribute("pedidos", pedidoService.listar());
         model.addAttribute("modoEdicion", true);
         return "detalle-pedido-formulario";
     }
@@ -57,12 +67,12 @@ public class DetallePedidoController {
                              @Valid @ModelAttribute("detalle") DetallePedido detalle,
                              BindingResult result,
                              Model model) {
-
         if (result.hasErrors()) {
+            model.addAttribute("productos", productoService.listar());
+            model.addAttribute("pedidos", pedidoService.listar());
             model.addAttribute("modoEdicion", true);
             return "detalle-pedido-formulario";
         }
-
         detallePedidoService.actualizar(id, detalle);
         return "redirect:/detalle-pedido";
     }

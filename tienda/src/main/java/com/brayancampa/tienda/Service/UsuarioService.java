@@ -10,4 +10,5 @@ public interface UsuarioService {
     Usuario crear(Usuario usuario);
     Usuario actualizar(Integer id, Usuario usuario);
     void eliminar(Integer id);
+    Usuario buscarPorNombre(String nombre);
 }

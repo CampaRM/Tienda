@@ -1,6 +1,7 @@
 package com.brayancampa.tienda.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
@@ -16,6 +17,7 @@ public class Pedido {
     @Column(name = "fecha_pedido", nullable = false)
     private String fechaPedido;
 
+    @Min(value = 0, message = "El total no puede ser negativo")
     @NotNull
     @Column(name = "total_pedido", nullable = false)
     private Double totalPedido;

@@ -3,16 +3,30 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Categorías</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categorías - Gestión</title>
     <link rel="stylesheet" th:href="@{/css/general.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
 <body>
-    <h1 class="titulo">Lista de Categorías</h1>
+    <div class="header-container">
+        <h1 class="titulo">LISTA DE CATEGORÍAS</h1>
+    </div>
 
-    <a th:href="@{/categoria/nuevo}" class="btn btn-nuevo">Nueva Categoría</a>
-    <a th:href="@{/categoria/eliminar}" class="btn btn-nuevo">Eliminar Categoría</a>
-    <a th:href="@{/categoria/actualizar}" class="btn btn-nuevo">Actualizar Categoría</a>
+    <div class="crud-actions">
+        <a th:href="@{/categoria/nuevo}" class="btn btn-nuevo">Nueva categoría</a>
+        <a th:href="@{/home}" class="btn btn-nuevo">Ir Home</a>
+    </div>
+
+    <div class="crud-actions-secondary">
+        <small class="texto-auxiliar">Otras acciones:</small>
+        <div class="botones-container">
+            <a th:href="@{/producto}" class="btn-sm">Ir a producto</a>
+            <a th:href="@{/pedido}" class="btn-sm">Ir a pedido</a>
+            <a th:href="@{/detalle-pedido}" class="btn-sm">Ir a Detalle Pedido</a>
+        </div>
+    </div>
 
     <table>
         <thead>
@@ -20,6 +34,7 @@
                 <th>ID</th>
                 <th>NOMBRE</th>
                 <th>DESCRIPCIÓN</th>
+                <th style="text-align: center;">ACCIONES</th>
             </tr>
         </thead>
         <tbody>
@@ -27,9 +42,26 @@
                 <td th:text="${categoria.idCategoria}"></td>
                 <td th:text="${categoria.nombreCategoria}"></td>
                 <td th:text="${categoria.descripcionCategoria}"></td>
+                <td style="text-align: center;">
+                    <a th:href="@{/categoria/editar/{id}(id=${categoria.idCategoria})}" 
+                       class="btn-icon" title="Editar Categoría">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </a>
+
+                    <a th:href="@{/categoria/eliminar/{id}(id=${categoria.idCategoria})}" 
+                       class="btn-icon danger" 
+                       title="Eliminar Categoría"
+                       onclick="return confirm('¿Estás seguro de eliminar esta categoría?')">
+                        <i class="fa-solid fa-trash"></i>
+                    </a>
+                </td>
             </tr>
         </tbody>
     </table>
-</body>
 
+    <div th:if="${#lists.isEmpty(categorias)}" class="mensaje-vacio">
+        No hay categorías registradas en la base de datos.
+    </div>
+
+</body>
 </html>

@@ -1,34 +1,29 @@
 package com.brayancampa.tienda.controller;
 
 import com.brayancampa.tienda.entity.Usuario;
+import com.brayancampa.tienda.repository.UsuarioRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Controller("/register")
+@Controller
+@RequestMapping("/register")
 public class RegisterController {
 
-    private static List<Usuario> usuariosRegistrados = new ArrayList<>();
+    private final UsuarioRepository usuarioRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    //Método para buscar si un usuario existe en la lista
-    public static boolean buscarUser(String username) {
-        for (Usuario u : usuariosRegistrados) {
-
-            if (u.getNombreUsuario().equalsIgnoreCase(username)) {
-                return true;
-            }
-        }
-        return false;
+    public RegisterController(UsuarioRepository usuarioRepository,
+                             PasswordEncoder passwordEncoder) {
+        this.usuarioRepository = usuarioRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
-
-    @GetMapping("/register")
+    @GetMapping
     public String mostrarFormulario(Model model) {
         model.addAttribute("usuario", new Usuario());
         return "register";
@@ -37,15 +32,29 @@ public class RegisterController {
     @PostMapping("/enviar-registro")
     public String registrar(@ModelAttribute("usuario") Usuario usuario, Model model) {
 
-        if (buscarUser(usuario.getNombreUsuario())) {
-            model.addAttribute("error", "El nombre de usuario '" + usuario.getNombreUsuario() + "' ya está en uso.");
+        System.out.println("ENTRÓ AL POST");
 
+        // Verificar si existe en BD
+        if (usuarioRepository.findByNombreUsuario(usuario.getNombreUsuario()).isPresent()) {
+            model.addAttribute("error", "El nombre de usuario ya está en uso");
             model.addAttribute("usuario", usuario);
-
-            return "/register";
+            return "register";
         }
-        usuariosRegistrados.add(usuario);
+
+        if (usuario.getEdadUsuario() < 0) {
+            model.addAttribute("error", "La edad no puede ser negativa");
+            return "register";
+        }
+
+        // Encriptar contraseña
+        usuario.setContrasena(passwordEncoder.encode(usuario.getContrasena()));
+
+        // Guardar en BD
+        usuarioRepository.save(usuario);
+
+        System.out.println("Usuario guardado en BD: " + usuario.getNombreUsuario());
 
         return "redirect:/login";
     }
+
 }

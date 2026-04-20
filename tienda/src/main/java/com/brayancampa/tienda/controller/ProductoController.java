@@ -42,6 +42,7 @@ public class ProductoController {
                         Model model) {
 
         if (result.hasErrors()) {
+            model.addAttribute("listaCategorias", categoriaService.listar());
             model.addAttribute("modoEdicion", false);
             return "producto-formulario";
         }
@@ -55,6 +56,7 @@ public class ProductoController {
     public String mostrarFormularioEditar(@PathVariable("id") Integer id, Model model) {
         Producto producto = productoService.obtenerPorId(id);
         model.addAttribute("producto", producto);
+        model.addAttribute("listaCategorias", categoriaService.listar());
         model.addAttribute("modoEdicion", true);
         return "producto-formulario";
     }
@@ -66,6 +68,7 @@ public class ProductoController {
                              Model model) {
 
         if (result.hasErrors()) {
+            model.addAttribute("listaCategorias", categoriaService.listar());
             model.addAttribute("modoEdicion", true);
             return "producto-formulario";
         }

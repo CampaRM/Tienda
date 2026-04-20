@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle Pedido - Gestión</title>
+    <link rel="stylesheet" th:href="@{/css/general.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="header-container">
+        <h1 class="titulo">DETALLE DEL PEDIDO</h1>
+    </div>
+
+    <div class="crud-actions">
+        <a th:href="@{/detalle/nuevo}" class="btn btn-nuevo">Nuevo Detalle</a>
+        <a th:href="@{/home}" class="btn btn-nuevo">Ir Home</a>
+    </div>
+
+    <div class="crud-actions-secondary">
+        <small class="texto-auxiliar">Ver otras tablas:</small>
+        <div class="botones-container">
+            <a th:href="@{/pedido}" class="btn-sm">Ir a Pedidos</a>
+            <a th:href="@{/producto}" class="btn-sm">Ir a Productos</a>
+            <a th:href="@{/usuario}" class="btn-sm">Ir a Usuarios</a>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>PRODUCTO</th>
+                <th>CANTIDAD</th>
+                <th>PRECIO UNIT.</th>
+                <th>PEDIDO (ID)</th>
+                <th style="text-align: center;">ACCIONES</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="detalle : ${detalles}">
+                <td th:text="${detalle.idDetalle}"></td>
+                <td th:text="${detalle.producto.nombreProducto}"></td>
+                <td th:text="${detalle.cantidad}"></td>
+                <td th:text="${detalle.precioUnitario}"></td>
+                <td th:text="${detalle.pedido.idPedido}"></td>
+                
+                <td style="text-align: center;">
+                    <a th:href="@{/detalle/editar/{id}(id=${detalle.idDetalle})}" 
+                       class="btn-icon" title="Editar Detalle">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </a>
+
+                    <a th:href="@{/detalle/eliminar/{id}(id=${detalle.idDetalle})}" 
+                       class="btn-icon danger" 
+                       title="Eliminar Detalle"
+                       onclick="return confirm('¿Eliminar este detalle del pedido?')">
+                        <i class="fa-solid fa-trash"></i>
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div th:if="${#lists.isEmpty(detalles)}" class="mensaje-vacio">
+        No hay detalles de pedido registrados.
+    </div>
+
+</body>
+</html>

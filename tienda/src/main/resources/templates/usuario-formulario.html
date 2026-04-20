@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title th:text="${usuario.idUsuario != null} ? 'Editar Usuario' : 'Nuevo Usuario'"></title>
     <link rel="stylesheet" th:href="@{/css/formulario.css}">
 </head>
+
 <body>
     <div class="container">
         <h1 th:text="${usuario.idUsuario != null} ? 'Editar Usuario' : 'Nuevo Usuario'"></h1>
 
-        <form th:action="${usuario.idUsuario != null} ? @{/usuario/actualizar} : @{/usuario/guardar}" 
-              th:object="${usuario}" 
-              method="post">
+        <form th:action="${usuario.idUsuario != null} ? @{/usuario/actualizar} : @{/usuario/guardar}"
+            th:object="${usuario}" method="post">
 
             <input type="hidden" th:field="*{idUsuario}">
 
@@ -33,12 +34,19 @@
                 <div class="error" th:if="${#fields.hasErrors('edadUsuario')}" th:errors="*{edadUsuario}"></div>
             </div>
 
+            <div class="campo" th:if="${usuario.idUsuario == null}">
+                <label>Contraseña</label>
+                <input type="password" th:field="*{contrasena}" placeholder="Ingresa la contraseña">
+                <div class="error" th:if="${#fields.hasErrors('contrasena')}" th:errors="*{contrasena}"></div>
+            </div>
+
             <div class="acciones">
-                <button type="submit" class="btn btn-guardar" 
-                        th:text="${usuario.idUsuario != null} ? 'Actualizar' : 'Guardar'"></button>
+                <button type="submit" class="btn-guardar"
+                    th:text="${usuario.idUsuario != null} ? 'Actualizar' : 'Guardar'"></button>
                 <a th:href="@{/usuario}" class="btn-cancelar">Cancelar</a>
             </div>
         </form>
     </div>
 </body>
+
 </html>

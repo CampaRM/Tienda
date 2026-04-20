@@ -1,6 +1,7 @@
 package com.brayancampa.tienda.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
@@ -16,10 +17,12 @@ public class Producto {
     @Column(name = "nombre_producto", nullable = false)
     private String nombreProducto;
 
+    @Min(value = 0, message = "El precio no puede ser negativo")
     @NotNull
     @Column(name = "precio_producto", nullable = false)
     private Double precioProducto;
 
+    @Min(value = 0, message = "El stock no puede ser negativo")
     @NotNull
     @Column(name = "stock", nullable = false)
     private Integer stock;

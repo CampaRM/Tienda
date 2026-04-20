@@ -45,6 +45,7 @@ public class PedidoController {
                         Model model) {
 
         if (result.hasErrors()) {
+            model.addAttribute("usuarios", usuarioService.listar());
             model.addAttribute("modoEdicion", false);
             return "pedido-formulario";
         }

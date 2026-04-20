@@ -24,6 +24,13 @@ public class Usuario {
     @Column(name = "edad_usuario", nullable = false)
     private Integer edadUsuario;
 
+   @NotNull
+    @Column(name = "contrasena", nullable = false)
+    private String contrasena;
+
+    public Usuario() {
+    }
+
     public Integer getIdUsuario() {
         return idUsuario;
     }
@@ -54,5 +61,13 @@ public class Usuario {
 
     public void setEdadUsuario(Integer edadUsuario) {
         this.edadUsuario = edadUsuario;
+    }
+
+    public String getContrasena() {
+        return contrasena;
+    }
+
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
     }
 }

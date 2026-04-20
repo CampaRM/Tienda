@@ -1,54 +1,57 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
-    <title th:text="${producto.idProducto != null} ? 'Editar Producto' : 'Nuevo Producto'"></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${modoEdicion} ? 'Editar Producto' : 'Nuevo Producto'"></title>
     <link rel="stylesheet" th:href="@{/css/formulario.css}">
 </head>
+
 <body>
     <div class="container">
-        <h1 th:text="${producto.idProducto != null} ? 'Editar Producto' : 'Nuevo Producto'"></h1>
+        <h1 class="titulo-formulario" th:text="${modoEdicion} ? 'EDITAR PRODUCTO' : 'NUEVO PRODUCTO'"></h1>
 
-        <form th:action="${producto.idProducto != null} ? @{/producto/actualizar} : @{/producto/guardar}" 
-              th:object="${producto}" 
-              method="post">
+        <form th:action="${modoEdicion} ? @{/producto/actualizar} : @{/producto/guardar}" th:object="${producto}"
+            method="post">
 
             <input type="hidden" th:field="*{idProducto}">
 
             <div class="campo">
-                <label>Nombre del Producto</label>
-                <input type="text" th:field="*{nombreProducto}">
+                <label for="nombreProducto">NOMBRE DEL PRODUCTO</label>
+                <input type="text" id="nombreProducto" th:field="*{nombreProducto}" placeholder="Ingrese nombre">
                 <div class="error" th:if="${#fields.hasErrors('nombreProducto')}" th:errors="*{nombreProducto}"></div>
             </div>
 
             <div class="campo">
-                <label>Precio</label>
-                <input type="number" step="0.01" th:field="*{precioProducto}">
+                <label for="precioProducto">PRECIO</label>
+                <input type="number" id="precioProducto" step="0.01" min="0" th:field="*{precioProducto}">
                 <div class="error" th:if="${#fields.hasErrors('precioProducto')}" th:errors="*{precioProducto}"></div>
             </div>
 
             <div class="campo">
-                <label>Stock</label>
-                <input type="number" th:field="*{stock}">
+                <label for="stock">STOCK</label>
+                <input type="number" id="stock" min="0" th:field="*{stock}">
                 <div class="error" th:if="${#fields.hasErrors('stock')}" th:errors="*{stock}"></div>
             </div>
 
             <div class="campo">
-                <label>Categoría</label>
-                <select th:field="*{categoria}">
-                    <option th:each="c : ${categorias}" 
-                            th:value="${c.idCategoria}" 
-                            th:text="${c.nombreCategoria}"></option>
+                <label for="categoria">CATEGORÍA</label>
+                <select id="categoria" th:field="*{categoria}">
+                    <option value="" disabled selected>Seleccione una categoría</option>
+                    <option th:each="cat : ${listaCategorias}" th:value="${cat.idCategoria}"
+                        th:text="${cat.nombreCategoria}">
+                    </option>
                 </select>
                 <div class="error" th:if="${#fields.hasErrors('categoria')}" th:errors="*{categoria}"></div>
             </div>
 
             <div class="acciones">
-                <button type="submit" class="btn btn-guardar" 
-                        th:text="${producto.idProducto != null} ? 'Actualizar' : 'Guardar'"></button>
+                <button type="submit" class="btn-guardar" th:text="${modoEdicion} ? 'ACTUALIZAR' : 'GUARDAR'"></button>
                 <a th:href="@{/producto}" class="btn-cancelar">Cancelar</a>
             </div>
         </form>
     </div>
 </body>
+
 </html>

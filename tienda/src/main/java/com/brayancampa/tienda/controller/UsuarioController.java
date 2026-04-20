@@ -3,6 +3,8 @@ package com.brayancampa.tienda.controller;
 import com.brayancampa.tienda.Service.UsuarioService;
 import com.brayancampa.tienda.entity.Usuario;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,6 +17,9 @@ import org.springframework.web.bind.annotation.*;
 public class UsuarioController {
 
     private final UsuarioService usuarioService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public UsuarioController(UsuarioService usuarioService) {
         this.usuarioService = usuarioService;
@@ -44,6 +49,7 @@ public class UsuarioController {
             return "usuario-formulario";
         }
 
+        usuario.setContrasena(passwordEncoder.encode(usuario.getContrasena()));
         usuarioService.crear(usuario);
         return "redirect:/usuario";
     }
